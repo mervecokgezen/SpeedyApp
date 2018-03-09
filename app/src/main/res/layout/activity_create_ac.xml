@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="25dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp"
+    tools:context="com.merveakgormus.speedy.CreateAcActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name-Surname: "/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="name-surename"
+            android:id="@+id/edt_namesurname"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone Number :"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/edt_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="phone"
+            android:hint="+90 555 55 55 "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Mail: "/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="e-mail"
+            android:id="@+id/edt_mail"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Password: "/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="password"
+            android:inputType="textPassword"
+            android:id="@+id/edt_password"/>
+
+        <Button
+            android:layout_width="150dp"
+            android:background="#8ac7c1"
+            android:layout_height="wrap_content"
+            android:text="register"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn_register"
+            android:textColor="#fff"
+            android:layout_gravity="right"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_gologin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BACK TO LOGIN!"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

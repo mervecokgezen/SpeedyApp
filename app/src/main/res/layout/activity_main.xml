@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.merveakgormus.speedy.MainActivity"
+    android:padding="16dp"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="120dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="E-Mail :"/>
+
+        <EditText
+            android:id="@+id/edt_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="E-Mail"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Password :"/>
+
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/editText"
+            android:layout_below="@+id/editText"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+
+            android:hint="Password" />
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="20dp"
+            android:text="LOGIN"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_createac"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="CREATE NEW ACCOUNT!"
+        android:gravity="center_horizontal"
+        />
+
+
+</LinearLayout>

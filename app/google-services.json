@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "698412683498",
+    "firebase_url": "https://speedy-4a865.firebaseio.com",
+    "project_id": "speedy-4a865",
+    "storage_bucket": "speedy-4a865.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698412683498:android:38f21428c77d51ee",
+        "android_client_info": {
+          "package_name": "com.merveakgormus.speedy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698412683498-idu5lkk9279gpkrtrr98c2g08d19hrhi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.merveakgormus.speedy",
+            "certificate_hash": "f756df236ed10c1a22486d808c6599660de7f76f"
+          }
+        },
+        {
+          "client_id": "698412683498-q80fc3qb5g0fdmi8neg90o0k7bqcus2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7PzqXGDlMsfD4sd2vAgN_3G52TWPq7XI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698412683498-q80fc3qb5g0fdmi8neg90o0k7bqcus2o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
