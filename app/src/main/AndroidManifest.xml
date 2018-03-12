@@ -22,6 +22,12 @@
         <activity android:name=".CreateAcActivity" />
         <activity android:name=".EmergencyContactActivity" />
         <activity android:name=".ContactAddActivity" />
+        <service android:name=".LockService">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

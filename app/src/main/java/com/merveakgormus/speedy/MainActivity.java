@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
        // progress = new ProgressDialog(this);
-
+        startService(new Intent(getApplicationContext(), LockService.class));
         edt_mail = (EditText)findViewById(R.id.edt_mail);
         edtpassword = (EditText)findViewById(R.id.edt_password);
         btn_login = (Button)findViewById(R.id.btn_login);

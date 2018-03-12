@@ -1,6 +1,12 @@
 package com.merveakgormus.speedy;
 
+import android.app.KeyguardManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
+import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,12 +35,18 @@ public class EmergencyContactActivity extends AppCompatActivity {
     private DatabaseReference databaseReference ;
     private FirebaseDatabase firebaseDatabase ;
     String ContactIDFromServer;
+    Context context;
     Contact c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_contact);
+
+
+
+        //PowerManager powerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+        //boolean isSceenAwake = (Build.VERSION.SDK_INT < 20 ? powerManager.isScreenOn() : powerManager.isInteractive());
 
         firebaseDatabase    = FirebaseDatabase.getInstance();
         databaseReference   = firebaseDatabase.getReference().child("Contacts");
@@ -89,4 +102,5 @@ public class EmergencyContactActivity extends AppCompatActivity {
 
 
     }
+
 }

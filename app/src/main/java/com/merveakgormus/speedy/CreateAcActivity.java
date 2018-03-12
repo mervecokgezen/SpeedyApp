@@ -28,8 +28,6 @@ public class CreateAcActivity extends AppCompatActivity {
     private EditText edt_namesurname, edt_mail, edt_password, edt_phone;
     private String name, mail, phone, password;
 
-   // private String user_name_surname, user_phone, user_password;
-
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
