@@ -38,7 +38,6 @@ public class ScreenReceiver extends BroadcastReceiver{
             st =bicim2.format(tarihSaat);//24-8-2014 02:17:02
             Log.e("Time : ", st);
             Bundle pudsBundle = intent.getExtras();
-            //Toast.makeText(context, st + "Screen On Canıms  ", Toast.LENGTH_LONG).show();
         }
     }
 

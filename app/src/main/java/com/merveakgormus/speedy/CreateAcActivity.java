@@ -6,6 +6,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,9 @@ public class CreateAcActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
+    TelephonyManager tel;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class CreateAcActivity extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
 
         final String deviceId  = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        final String imei = tel.getImei();
 
 
         btn_register.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,6 @@
 package com.merveakgormus.speedy;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -37,13 +38,17 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     DatabaseReference databaseReference;
 
+    Button btnimei;
+
     private ScreenReceiver s;
+    //TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        btnimei = (Button)findViewById(R.id.imei);
         startService(new Intent(getApplicationContext(), LockService.class));
         edt_mail = (EditText)findViewById(R.id.edt_mail);
         edtpassword = (EditText)findViewById(R.id.edt_password);
@@ -52,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
+        btnimei.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                btnimei.setText(getDeviceIMEI(MainActivity.this).toString());
+            }
+        });
 
         tv_createac.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +100,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public String getDeviceIMEI(Activity activity) {
+        TelephonyManager telephonyManager = (TelephonyManager) activity
+                .getSystemService(Context.TELEPHONY_SERVICE);
+        String id = telephonyManager.getDeviceId();
+        if(id == null)
+        {
+            return "imein yok";
+        }
+        else {return telephonyManager.getDeviceId();}
+
     }
 
 }
