@@ -1,6 +1,7 @@
 package com.merveakgormus.speedy;
 
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,17 +18,21 @@ public class ContactAddActivity extends AppCompatActivity {
 
     Button btn_add;
     EditText edt_contactname, edt_contactphone, edt_contactemail;
-    String contactname, contactphone, contactemail;
+    String contactname, contactphone, contactemail, device_id;
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
+    String deviceId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_add);
+
+        deviceId  = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+
         databaseReference = FirebaseDatabase.getInstance().getReference("Contacts");
 
         btn_add          = (Button)findViewById(R.id.btn_contactadd);
@@ -41,12 +46,12 @@ public class ContactAddActivity extends AppCompatActivity {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 contactname  = edt_contactname.getText().toString();
                 contactphone = edt_contactphone.getText().toString();
                 contactemail = edt_contactemail.getText().toString();
+                device_id    = deviceId;
 
-                AddNewUser(contactname, contactphone, contactemail);
+                AddNewUser(contactname, contactphone, contactemail, device_id);
 
                 Toast.makeText(ContactAddActivity.this,"Add Succes!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(ContactAddActivity.this, EmergencyContactActivity.class));
@@ -55,11 +60,11 @@ public class ContactAddActivity extends AppCompatActivity {
         });
     }
 
-    private void  AddNewUser(String ccontactname, String ccontactphone, String ccontactemail){
+    private void  AddNewUser(String ccontactname, String ccontactphone, String ccontactemail, String cdeviceid){
 
         Contact contact = new Contact(ccontactname, ccontactphone, ccontactemail);
 
         String ContactsIDFromServer = databaseReference.push().getKey();
-        databaseReference.child(ContactsIDFromServer).setValue(contact);
+        databaseReference.child(cdeviceid).child(ContactsIDFromServer).setValue(contact);
     }
 }

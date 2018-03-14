@@ -1,10 +1,13 @@
 package com.merveakgormus.speedy;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,13 +35,15 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    DatabaseReference databaseReference;
 
+    private ScreenReceiver s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // progress = new ProgressDialog(this);
+
         startService(new Intent(getApplicationContext(), LockService.class));
         edt_mail = (EditText)findViewById(R.id.edt_mail);
         edtpassword = (EditText)findViewById(R.id.edt_password);
@@ -58,11 +67,10 @@ public class MainActivity extends AppCompatActivity {
                 pwd = edtpassword.getText().toString();
 
                 if(email.isEmpty() || pwd.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Gerekli alanları doldur.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Fill in required fields.", Toast.LENGTH_LONG).show();
                 }else{
                     LoginFunc();
                 }
-
             }
         });
 
@@ -81,4 +89,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }

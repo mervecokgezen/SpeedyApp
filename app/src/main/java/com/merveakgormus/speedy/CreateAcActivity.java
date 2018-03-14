@@ -2,6 +2,7 @@ package com.merveakgormus.speedy;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class CreateAcActivity extends AppCompatActivity {
     private Button  btn_register;
     private TextView tv_backlogin;
     private EditText edt_namesurname, edt_mail, edt_password, edt_phone;
-    private String name, mail, phone, password;
+    private String name, mail, phone, password, device_id;
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
@@ -48,15 +49,18 @@ public class CreateAcActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
+        final String deviceId  = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                name     = edt_namesurname.getText().toString();
-                mail     = edt_mail.getText().toString();
-                phone    = edt_phone.getText().toString();
-                password = edt_password.getText().toString();
+                name      = edt_namesurname.getText().toString();
+                mail      = edt_mail.getText().toString();
+                phone     = edt_phone.getText().toString();
+                password  = edt_password.getText().toString();
+                device_id = deviceId;
 
 
                 if(mail.isEmpty() || password.isEmpty()){
@@ -67,7 +71,7 @@ public class CreateAcActivity extends AppCompatActivity {
 
 
                     UserRegister();
-                    AddUser(name, mail, phone, password);
+                    AddUser(name, mail, phone, password,device_id);
 
                 }
             }
@@ -97,11 +101,11 @@ public class CreateAcActivity extends AppCompatActivity {
         });
     }
 
-    public  void AddUser(String uname,String umail,String uphone,String upassword){
-        User user = new User(uname, umail, uphone, upassword);
+    public  void AddUser(String uname,String umail,String uphone,String upassword, String udeviceId){
+        User user = new User(uname, umail, uphone, upassword, udeviceId);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Users").child(firebaseUser.getUid()).setValue(user);
+        databaseReference.child("Users").child(device_id).setValue(user);
     }
 
 }

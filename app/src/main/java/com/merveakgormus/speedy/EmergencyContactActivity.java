@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,31 +38,32 @@ public class EmergencyContactActivity extends AppCompatActivity {
     String ContactIDFromServer;
     Context context;
     Contact c;
+    String deviceId;
+
+    TextView test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_contact);
+        test = (TextView)findViewById(R.id.test);
 
-
-
-        //PowerManager powerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
-        //boolean isSceenAwake = (Build.VERSION.SDK_INT < 20 ? powerManager.isScreenOn() : powerManager.isInteractive());
+        deviceId  = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         firebaseDatabase    = FirebaseDatabase.getInstance();
-        databaseReference   = firebaseDatabase.getReference().child("Contacts");
-        ContactIDFromServer =databaseReference.push().getKey();
-        //databaseReference.child(ContactIDFromServer).get(c);
+        databaseReference   = firebaseDatabase.getReference().child("Contacts").child(deviceId);
+        ContactIDFromServer = databaseReference.push().getKey();
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 contact_list = new ArrayList<Contact>();
                 for(DataSnapshot ds :dataSnapshot.getChildren())
                 {
                     c = new Contact(ds.child("contact_name").getValue().toString(),ds.child("contact_phone").getValue().toString(),ds.child("contact_mail").getValue().toString());
-
                     contact_list.add(c);
+
 
                 }
                 recycler_view = (RecyclerView)findViewById(R.id.recycler_view);
@@ -76,11 +78,9 @@ public class EmergencyContactActivity extends AppCompatActivity {
 
                     @Override
                     public void onItemClick(View v, int position) {
-                        Log.d("position", "Tıklanan Pozisyon:" + position);
+                        //Log.d("position", "Tıklanan Pozisyon:" + position);
                         Contact y = contact_list.get(position);
-                        Toast.makeText(getApplicationContext(),"pozisyon:"+" "+position+" "+"Ad:"+y.getContact_name(),Toast.LENGTH_SHORT).show();
-
-                    }
+                        }
                 });
                 recycler_view.setAdapter(adapter_items);
             }

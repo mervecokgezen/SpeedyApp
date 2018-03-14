@@ -7,6 +7,10 @@
     android:orientation="vertical"
     android:layout_margin="16dp"
     tools:context="com.merveakgormus.speedy.EmergencyContactActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/test"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

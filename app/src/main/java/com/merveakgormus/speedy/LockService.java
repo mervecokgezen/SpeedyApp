@@ -32,8 +32,7 @@ public class LockService extends Service {
         final BroadcastReceiver broadcastReceiver = new  ScreenReceiver();
         registerReceiver(broadcastReceiver,filter);
         MainActivity main = new MainActivity();
-        return super.onStartCommand(intent,flags, startId);
-
+        return START_STICKY; //Uygulama kapatılsa bile servisin arka planda çalışmaya devam etmesini sağlıyor!
     }
     public class LocalBinder extends Binder {
         LockService getService(){

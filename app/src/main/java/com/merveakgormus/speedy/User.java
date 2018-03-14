@@ -12,11 +12,22 @@ public class User {
     private String user_phone;
     private String user_password;
 
-    public User(String user_name_surname, String user_email, String user_phone, String user_password) {
-        this.user_name_surname = user_name_surname;
-        this.user_email = user_email;
-        this.user_phone = user_phone;
-        this.user_password = user_password;
+    public String getDevice_id() {
+        return device_id;
+    }
+
+    public void setDevice_id(String device_id) {
+        this.device_id = device_id;
+    }
+
+    private String device_id;
+
+    public User(String user_name_surname, String user_email, String user_phone, String user_password, String device_id) {
+        this.user_name_surname  = user_name_surname;
+        this.user_email         = user_email;
+        this.user_phone         = user_phone;
+        this.user_password      = user_password;
+        this.device_id          = device_id;
     }
 
     public String getUser_name_surname() {

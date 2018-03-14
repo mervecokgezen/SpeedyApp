@@ -7,12 +7,10 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,16 +22,10 @@ import java.util.GregorianCalendar;
 
 public class ScreenReceiver extends BroadcastReceiver{
 
-    DatabaseReference databaseReference;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
+    public String st;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("ScreenLockTime");
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
 
         if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF)){
             Log.e("Lock", "OF");
@@ -41,25 +33,13 @@ public class ScreenReceiver extends BroadcastReceiver{
         }else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)){
             Log.e("Lock","ON");
 
-
-
-
             SimpleDateFormat bicim2=new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
             Date tarihSaat=new Date();
-            String st =bicim2.format(tarihSaat);// 24-8-2014 02:17:02
+            st =bicim2.format(tarihSaat);//24-8-2014 02:17:02
             Log.e("Time : ", st);
             Bundle pudsBundle = intent.getExtras();
-            Toast.makeText(context, st + "Screen On Canıms  ",
-                    Toast.LENGTH_LONG).show();
-            setTime(st);
+            //Toast.makeText(context, st + "Screen On Canıms  ", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void setTime(String screenontime){
-        ScreenLockTime screenLockTime = new ScreenLockTime(screenontime);
-
-        String ContactsIDFromServer = databaseReference.push().getKey();
-        databaseReference.child(ContactsIDFromServer).setValue(screenLockTime);
-
-    }
 }
