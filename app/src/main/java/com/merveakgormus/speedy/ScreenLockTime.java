@@ -7,15 +7,18 @@ package com.merveakgormus.speedy;
 public class ScreenLockTime {
     private String screenontime;
 
-    public String getScreenontime() {
+    public String getScreenontime()
+    {
         return screenontime;
     }
 
-    public void setScreenontime(String screenontime) {
+    public void setScreenontime(String screenontime)
+    {
         this.screenontime = screenontime;
     }
 
-    ScreenLockTime(String screenontime){
+    ScreenLockTime(String screenontime)
+    {
         this.screenontime = screenontime;
     }
 }
