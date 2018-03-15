@@ -23,20 +23,22 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
+
 public class CreateAcActivity extends AppCompatActivity {
 
     private Button  btn_register;
     private TextView tv_backlogin;
     private EditText edt_namesurname, edt_mail, edt_password, edt_phone;
-    private String name, mail, phone, password, device_id;
+    private String name, mail, phone, password;
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
-    TelephonyManager tel;
-
-
+    String macadresi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +55,7 @@ public class CreateAcActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        final String deviceId  = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-        final String imei = tel.getImei();
-
+        macadresi = getUserMacAddr().toLowerCase().toString();
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,19 +65,12 @@ public class CreateAcActivity extends AppCompatActivity {
                 mail      = edt_mail.getText().toString();
                 phone     = edt_phone.getText().toString();
                 password  = edt_password.getText().toString();
-                device_id = deviceId;
-
 
                 if(mail.isEmpty() || password.isEmpty()){
-
                     Toast.makeText(getApplicationContext(),"Please fill in the required fields!",Toast.LENGTH_SHORT).show();
-
                 }else{
-
-
                     UserRegister();
-                    AddUser(name, mail, phone, password,device_id);
-
+                    AddUser(name, mail, phone, password,macadresi);
                 }
             }
         });
@@ -95,7 +88,6 @@ public class CreateAcActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-
                     startActivity(new Intent(CreateAcActivity.this, EmergencyContactActivity.class));
                     finish();
                 }
@@ -110,7 +102,33 @@ public class CreateAcActivity extends AppCompatActivity {
         User user = new User(uname, umail, uphone, upassword, udeviceId);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Users").child(device_id).setValue(user);
+        databaseReference.child("Users").child(udeviceId).setValue(user);
     }
 
+    public static String getUserMacAddr()
+    {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(Integer.toHexString(b & 0xFF) + ":");
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+        }
+        return "null-mac";
+    }
 }

@@ -14,24 +14,28 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
+
 public class ContactAddActivity extends AppCompatActivity {
 
     Button btn_add;
     EditText edt_contactname, edt_contactphone, edt_contactemail;
-    String contactname, contactphone, contactemail, device_id;
+    String contactname, contactphone, contactemail;
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
-    String deviceId;
+    String macadresi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_add);
 
-        deviceId  = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        macadresi = getUserMacAddr().toLowerCase().toString();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Contacts");
 
@@ -49,9 +53,8 @@ public class ContactAddActivity extends AppCompatActivity {
                 contactname  = edt_contactname.getText().toString();
                 contactphone = edt_contactphone.getText().toString();
                 contactemail = edt_contactemail.getText().toString();
-                device_id    = deviceId;
 
-                AddNewUser(contactname, contactphone, contactemail, device_id);
+                AddNewUser(contactname, contactphone, contactemail, macadresi);
 
                 Toast.makeText(ContactAddActivity.this,"Add Succes!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(ContactAddActivity.this, EmergencyContactActivity.class));
@@ -66,5 +69,32 @@ public class ContactAddActivity extends AppCompatActivity {
 
         String ContactsIDFromServer = databaseReference.push().getKey();
         databaseReference.child(cdeviceid).child(ContactsIDFromServer).setValue(contact);
+    }
+
+    public static String getUserMacAddr()
+    {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(Integer.toHexString(b & 0xFF) + ":");
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+        }
+        return "null-mac";
     }
 }

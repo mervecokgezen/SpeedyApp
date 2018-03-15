@@ -24,6 +24,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,21 +38,24 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    DatabaseReference databaseReference;
 
     Button btnimei;
 
     private ScreenReceiver s;
-    //TelephonyManager telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
 
+    String macadresi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        macadresi = getUserMacAddr().toLowerCase().toString();
+
         btnimei = (Button)findViewById(R.id.imei);
+
         startService(new Intent(getApplicationContext(), LockService.class));
+
         edt_mail = (EditText)findViewById(R.id.edt_mail);
         edtpassword = (EditText)findViewById(R.id.edt_password);
         btn_login = (Button)findViewById(R.id.btn_login);
@@ -57,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
+
         btnimei.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                btnimei.setText(getDeviceIMEI(MainActivity.this).toString());
+                Toast.makeText(MainActivity.this, macadresi, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -102,16 +109,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public String getDeviceIMEI(Activity activity) {
-        TelephonyManager telephonyManager = (TelephonyManager) activity
-                .getSystemService(Context.TELEPHONY_SERVICE);
-        String id = telephonyManager.getDeviceId();
-        if(id == null)
-        {
-            return "imein yok";
-        }
-        else {return telephonyManager.getDeviceId();}
+    public static String getUserMacAddr()
+    {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
 
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(Integer.toHexString(b & 0xFF) + ":");
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+        }
+        return "null-mac";
     }
 
 }

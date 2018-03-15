@@ -24,7 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class EmergencyContactActivity extends AppCompatActivity {
@@ -38,7 +40,7 @@ public class EmergencyContactActivity extends AppCompatActivity {
     String ContactIDFromServer;
     Context context;
     Contact c;
-    String deviceId;
+    String  macadresi;
 
     TextView test;
 
@@ -48,10 +50,11 @@ public class EmergencyContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_emergency_contact);
         test = (TextView)findViewById(R.id.test);
 
-        deviceId  = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        //deviceId  = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+        macadresi = getUserMacAddr().toLowerCase().toString();
 
         firebaseDatabase    = FirebaseDatabase.getInstance();
-        databaseReference   = firebaseDatabase.getReference().child("Contacts").child(deviceId);
+        databaseReference   = firebaseDatabase.getReference().child("Contacts").child(macadresi);
         ContactIDFromServer = databaseReference.push().getKey();
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -101,6 +104,33 @@ public class EmergencyContactActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public static String getUserMacAddr()
+    {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(Integer.toHexString(b & 0xFF) + ":");
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+        }
+        return "null-mac";
     }
 
 }
