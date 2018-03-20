@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(MainActivity.this, macadresi, Toast.LENGTH_LONG).show();
+                startService(new Intent(MainActivity.this, NotificationService.class));
             }
         });
 

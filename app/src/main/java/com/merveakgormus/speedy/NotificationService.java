@@ -46,7 +46,7 @@ public class NotificationService extends Service {
         Notification.Builder builder;
 
         builder=new Notification.Builder(context)
-                .setContentTitle("SUCCESS!").setContentText("Notification is succes!")
+                .setContentTitle("Hey!").setContentText("İyi misin ? Seni merak ettim :)")
                 .setContentIntent(pendingIntent)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setAutoCancel(true)    ;

@@ -44,15 +44,13 @@ public class ScreenReceiver extends BroadcastReceiver{
 
         macadresi = getUserMacAddr().toLowerCase().toString();
 
-
-
         if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF)){
             Log.e("Lock", "OF");
 
         }else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)){
             Log.e("Lock","ON");
 
-            SimpleDateFormat bicim2=new SimpleDateFormat(" hh:mm:ss");
+            SimpleDateFormat bicim2=new SimpleDateFormat("hh:mm:ss");
             Date tarihSaat=new Date();
             st =bicim2.format(tarihSaat);//02:17:02
 
@@ -65,14 +63,14 @@ public class ScreenReceiver extends BroadcastReceiver{
             Bundle pudsBundle = intent.getExtras();
 
             AddUnLockTime(st, macadresi, dy);
+
         }
     }
 
     public void AddUnLockTime(String screenontime, String cdeviceid, String cday){
-
-
         ScreenLockTime screenLockTime = new ScreenLockTime(screenontime);
         databaseReference.child(cdeviceid).child(cday).setValue(screenLockTime);
+        Log.e("\n\nDevice id: "+cdeviceid, "  Screen On Time: "+screenontime);
     }
 
     public static String getUserMacAddr()

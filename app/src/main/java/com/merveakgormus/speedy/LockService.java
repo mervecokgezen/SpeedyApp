@@ -34,6 +34,12 @@ public class LockService extends Service {
         MainActivity main = new MainActivity();
         return START_STICKY; //Uygulama kapatılsa bile servisin arka planda çalışmaya devam etmesini sağlıyor!
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
     public class LocalBinder extends Binder {
         LockService getService(){
             return LockService.this;

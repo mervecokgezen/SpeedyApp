@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATdE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
 
 
@@ -30,11 +30,19 @@
         <activity android:name=".CreateAcActivity" />
         <activity android:name=".EmergencyContactActivity" />
         <activity android:name=".ContactAddActivity" />
+
         <service android:name=".LockService">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.SCREEN_ON"/>
             </intent-filter>
         </service>
+        <receiver android:name=".ScreenReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.SCREEN_ON"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 
