@@ -78,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CreateAcActivity.class));
             }
         });
+        if (firebaseUser != null) {
+            startActivity(new Intent(MainActivity.this, EmergencyContactActivity.class));
+            Toast.makeText(MainActivity.this, "Welcome, I'm Speedy!", Toast.LENGTH_LONG).show();
+        } else {
+
+        }
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,9 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
-
     public void LoginFunc(){
         mAuth.signInWithEmailAndPassword(email,pwd).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
